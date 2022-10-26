@@ -1,10 +1,14 @@
 import os
 from mmengine.config import Config
+from mmengine.registry import RUNNERS
+from mmengine.runner import Runner
+
+from mmocr.utils import register_all_modules
 
 def main():
     cfg = Config.fromfile('satrn_japanese_cfg.py')
 
-    #os.makedirs('satrn_output', exist_ok=True)
+    os.makedirs('satrn_output', exist_ok=True)
 
     ####
     ## modify configuration file
@@ -25,7 +29,7 @@ def main():
     cfg.train_dataloader.dataset = cfg.train_dataset
 
     cfg.test.data_prefix.img_path = 'test'
-    cfg.test.ann_file = 'train_labels.json'
+    cfg.test.ann_file = 'test_labels.json'
     cfg.test_dataset.datasets = [cfg.test]
     cfg.test_dataloader.dataset = cfg.test_dataset
 
@@ -37,19 +41,24 @@ def main():
     cfg.device = 'cuda'
 
     # Others
+    cfg.train_dataloader.batch_size = 32
+    cfg.train_dataloader.num_workers = 8
     cfg.model.decoder.max_seq_len = 35
     cfg.train_cfg.max_epochs = 1 # default 5 
 
     cfg.dump('new_SATRN_cfg.py')
-    '''
-    # Build dataset
-    datasets = [build_dataset(cfg.data.train)]
+    
+    # build the runner from config
+    if 'runner_type' not in cfg:
+        # build the default runner
+        runner = Runner.from_cfg(cfg)
+    else:
+        # build customized runner from the registry
+        # if 'runner_type' is set in the cfg
+        runner = RUNNERS.build(cfg)
 
-    model = build_detector(cfg.model)
-    model.CLASSES = datasets[0].CLASSES
-    model.init_weights()
-
-    train_detector(model, datasets, cfg, validate=True)
-    '''
+    # start training
+    runner.train()
+    
 if __name__ == '__main__':
     main()
