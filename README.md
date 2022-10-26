@@ -7,12 +7,7 @@ pip install openmim==0.3.2
 pip install mmengine==0.2.0
 pip install mmcv==2.0.0rc1 -f https://download.openmmlab.com/mmcv/dist/cu116/torch1.12.0/index.html
 pip install mmdet==3.0.0rc2
+pip install mmocr==1.0.0rc2
 pip install openpyxl==3.0.10
 pip install 
-git clone https://github.com/open-mmlab/mmocr.git
-cd mmocr trdg==1.8.0
-git checkout 1.x
-pip install -r requirements.txt
-pip install .
-
 ~~~
