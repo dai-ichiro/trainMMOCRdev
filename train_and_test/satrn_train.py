@@ -14,13 +14,12 @@ def main():
     ## modify configuration file
     ####
 
-    # set output dir
+    # Set output dir
     cfg.work_dir = 'satrn_output'
 
     # Path to dictionary file
     cfg.dictionary.dict_file = 'dicts.txt'
     cfg.model.decoder.dictionary = cfg.dictionary
-    
     
     # Path to annotation file and image folder
     cfg.train.data_prefix.img_path = 'train'
