@@ -35,8 +35,7 @@ def main():
 
     cfg.val_dataloader.dataset = cfg.test_dataset
 
-
-    # modify cuda setting
+    # Modify cuda setting
     cfg.gpu_ids = range(1)
     cfg.device = 'cuda'
 
