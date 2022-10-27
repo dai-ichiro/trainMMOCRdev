@@ -45,10 +45,8 @@ def main():
     cfg.train_dataloader.num_workers = 8
     cfg.model.decoder.max_seq_len = 35
     cfg.train_cfg.max_epochs = 1 # default 5 
-
-    cfg.dump('new_SATRN_cfg.py')
     
-    # build the runner from config
+    # Build the runner from config
     if 'runner_type' not in cfg:
         # build the default runner
         runner = Runner.from_cfg(cfg)
@@ -57,7 +55,7 @@ def main():
         # if 'runner_type' is set in the cfg
         runner = RUNNERS.build(cfg)
 
-    # start training
+    # Start training
     runner.train()
     
 if __name__ == '__main__':
