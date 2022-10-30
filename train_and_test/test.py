@@ -7,7 +7,7 @@ from mmocr.ocr import MMOCR
 img = sys.argv[1]
 
 cfg = 'satrn_output/satrn_japanese_cfg.py'
-checkpoint = 'satrn_output/epoch_1.pth'
+checkpoint = 'satrn_output/epoch_3.pth'
 
 ocr_model = MMOCR(
     det = None,

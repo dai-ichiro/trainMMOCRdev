@@ -98,7 +98,7 @@ model = dict(
         d_k=64,
         d_v=64,
         d_model=512,
-        n_position=100,
+        n_position=200,
         d_inner=2048,
         dropout=0.1),
     decoder=dict(
@@ -135,7 +135,45 @@ train_pipeline = [
         ignore_empty=True,
         min_size=2),
     dict(type='LoadOCRAnnotations', with_text=True),
-    dict(type='Resize', scale=(100, 32), keep_ratio=False),
+    dict(type='Resize', scale=(200, 32), keep_ratio=False),
+    dict(
+        type='RandomApply',
+        prob=0.5,
+        transforms=[
+            dict(
+                type='RandomChoice',
+                transforms=[
+                    dict(
+                        type='RandomRotate',
+                        max_angle=5,
+                    ),
+                ])
+        ],
+    ),
+    dict(
+        type='RandomApply',
+        prob=0.25,
+        transforms=[
+            dict(type='PyramidRescale'),
+            dict(
+                type='mmdet.Albu',
+                transforms=[
+                    dict(type='GaussNoise', var_limit=(20, 20), p=0.5),
+                    dict(type='MotionBlur', blur_limit=5, p=0.5),
+                ]),
+        ]),
+    dict(
+        type='RandomApply',
+        prob=0.25,
+        transforms=[
+            dict(
+                type='TorchVisionWrapper',
+                op='ColorJitter',
+                brightness=0.5,
+                saturation=0.5,
+                contrast=0.5,
+                hue=0.1),
+        ]),
     dict(
         type='PackTextRecogInputs',
         meta_keys=('img_path', 'ori_shape', 'img_shape', 'valid_ratio'))
@@ -143,7 +181,7 @@ train_pipeline = [
 
 test_pipeline = [
     dict(type='LoadImageFromFile', file_client_args=dict(backend='disk')),
-    dict(type='Resize', scale=(100, 32), keep_ratio=False),
+    dict(type='Resize', scale=(200, 32), keep_ratio=False),
     dict(type='LoadOCRAnnotations', with_text=True),
     dict(
         type='PackTextRecogInputs',
@@ -160,7 +198,7 @@ train_dataset = dict(
             ignore_empty=True,
             min_size=2),
         dict(type='LoadOCRAnnotations', with_text=True),
-        dict(type='Resize', scale=(100, 32), keep_ratio=False),
+        dict(type='Resize', scale=(200, 32), keep_ratio=False),
         dict(
             type='PackTextRecogInputs',
             meta_keys=('img_path', 'ori_shape', 'img_shape', 'valid_ratio'))
@@ -171,7 +209,7 @@ test_dataset = dict(
     datasets=[test],
     pipeline=[
         dict(type='LoadImageFromFile', file_client_args=dict(backend='disk')),
-        dict(type='Resize', scale=(100, 32), keep_ratio=False),
+        dict(type='Resize', scale=(200, 32), keep_ratio=False),
         dict(type='LoadOCRAnnotations', with_text=True),
         dict(
             type='PackTextRecogInputs',

@@ -34,15 +34,19 @@ def main():
 
     cfg.val_dataloader.dataset = cfg.test_dataset
 
+    # Pipeline
+    cfg.train_dataset.pipeline = cfg.train_pipeline
+    
     # Modify cuda setting
     cfg.gpu_ids = range(1)
     cfg.device = 'cuda'
 
     # Others
-    cfg.train_dataloader.batch_size = 32
+    cfg.train_dataloader.batch_size = 16
     cfg.train_dataloader.num_workers = 8
     cfg.model.decoder.max_seq_len = 35
-    cfg.train_cfg.max_epochs = 1 # default 5 
+    cfg.train_cfg.max_epochs = 3 # default 5 
+    cfg.default_hooks.logger.interval = 1000
     
     # Build the runner from config
     if 'runner_type' not in cfg:
