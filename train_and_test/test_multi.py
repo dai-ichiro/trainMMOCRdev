@@ -20,6 +20,7 @@ ocr_model = MMOCR(
     device = 'cuda'
     )
 
-for img in imgs:
-    results = ocr_model.readtext(img, print_result=False, show=False)
-    print(results['rec_texts'])
+results = ocr_model.readtext(imgs, print_result=False, show=False)
+texts_list = results[0]['rec_texts']
+for text in texts_list:
+    print(text)
