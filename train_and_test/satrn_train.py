@@ -3,8 +3,6 @@ from mmengine.config import Config
 from mmengine.registry import RUNNERS
 from mmengine.runner import Runner
 
-from mmocr.utils import register_all_modules
-
 def main():
     cfg = Config.fromfile('satrn_japanese_cfg.py')
 
