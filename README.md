@@ -23,8 +23,8 @@ trdg -l ja -c 100 -k 1 -rk -bl 1 -rbl -fd fonts -dt text.txt -na 2 --output_dir 
 ~~~
 ## How to convert txt to json
 ~~~
-python txt2json.py --input train/labels.txt --output train_labels.json
-python txt2json.py --input test/labels.txt --output test_labels.json
+python tools/txt2json.py --input train/labels.txt --output train_labels.json
+python tools/txt2json.py --input test/labels.txt --output test_labels.json
 ~~~
 
 ## How to train
