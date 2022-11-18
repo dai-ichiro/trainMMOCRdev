@@ -5,11 +5,6 @@ from torchvision.datasets.utils import download_url
 
 os.makedirs('models', exist_ok=True)
 
-# download dict file
-dict_url = 'https://raw.githubusercontent.com/open-mmlab/mmocr/dev-1.x/dicts/english_digits_symbols.txt'
-dict_fname = dict_url.split('/')[-1]
-download_url(dict_url, root = 'models', filename = dict_fname)
-
 ############ Build OCR model ############
 # Detection: textsnake
 det_checkpoint_name = 'textsnake_resnet50_fpn-unet_1200e_ctw1500'
