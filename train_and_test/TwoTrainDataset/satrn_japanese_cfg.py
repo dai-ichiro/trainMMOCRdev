@@ -1,8 +1,8 @@
 
 train0 = dict(
     type='OCRDataset',
-    data_prefix=dict(img_path='train_with_noise'),
-    ann_file='train0_labels.json',
+    data_prefix=dict(img_path='train'),
+    ann_file='train_labels.json',
     test_mode=False,
     pipeline=None)
 
